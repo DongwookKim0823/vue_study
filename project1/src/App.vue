@@ -1,15 +1,26 @@
 <template>
 
-  <div class="menu">
-    <a v-for="a in 메뉴들" :key="a">{{ a }}</a> <!-- 반복문 형식: <태그 v-for="작명 in 횟수/데이터(array, object) :key="작명"> -->
+  <!-- 조건문 사용하기
+  <div v-if="1 == 3">
+    안녕하세요3
   </div>
+  <div v-else-if="1 == 2">
+    안녕하세요2
+  </div>
+  <div v-else>
+    안녕하세요1
+  </div> -->
 
   <div class="black-bg" v-if="모달창열렸니 == true">
     <div class="white-bg">
-      <h4>상세페이지임</h4>
-      <p>상세페이지 내용임</p>
+      <h4>{{ 원룸들[누른거].title }}</h4>
+      <p>{{ 원룸들[누른거].content }}</p>
       <botton @click="모달창열렸니 = false">닫기</botton>
     </div>
+  </div>
+
+  <div class="menu">
+    <a v-for="a in 메뉴들" :key="a">{{ a }}</a> <!-- 반복문 형식: <태그 v-for="작명 in 횟수/데이터(array, object) :key="작명"> -->
   </div>
 
   <!--
@@ -20,17 +31,17 @@
   </div>
   -->
 
-  <div> <!-- HTML 태그안의 속성 데이터바인딩은 :어쩌구, HTML 태그안의 내용 데이터바인딩은 {{ 어쩌구 }} -->
-    <img :src="원룸들[0].image" class="room-img"> <!-- 이미지는 src/assets 디렉토리에 저장하자 -->
-    <h4>{{ 원룸들[0].title }}</h4>
-    <p>{{ 원룸들[0].price }}원</p>
+  <div v-for="(작명,i) in 원룸들" :key="i"> <!-- HTML 태그안의 속성 데이터바인딩은 :어쩌구, HTML 태그안의 내용 데이터바인딩은 {{ 어쩌구 }} -->
+    <img :src="원룸들[i].image" class="room-img"> <!-- 이미지는 src/assets 디렉토리에 저장하자 -->
+    <h4 @click="모달창열렸니 = true; 누른거 = i">{{ 원룸들[i].title }}</h4> <!-- @click == v-on:click -->
+    <p>{{ 원룸들[i].price }}원</p>
   </div>
-  <div>
+  <!-- <div>
     <img src="./assets/room1.jpg" class="room-img">
     <h4>{{products[1]}}</h4>
     <p>60 만원</p>
     <button @click="신고수[1]++">허위매물신고</button>
-    <span>신고수: {{신고수[1]}}</span> <!-- @click == v-on:click -->
+    <span>신고수: {{신고수[1]}}</span> 
   </div>
   <div>
     <img src="./assets/room2.jpg" class="room-img">
@@ -38,7 +49,7 @@
     <p>70 만원</p>
     <button @click="신고수[2]++">허위매물신고</button>
     <span>신고수: {{신고수[2]}}</span>
-  </div>
+  </div> -->
 </template>
 
 <script>
@@ -48,8 +59,9 @@ export default {
   name: 'App',
   data(){ // 데이터 보관하는 곳. 일반 변수 뿐만 아니라 HTML 속성도 데이터 바인딩 가능
     return {
-      // 동적 UI 만드는 법. 1 UI의 현재 상태를 데이터로 저장해둠 2 데이터에 따라 UI가 어떻게 보일지 작성
+      누른거: 0,
       원룸들: data,
+      // 동적 UI 만드는 법. 1 UI의 현재 상태를 데이터로 저장해둠 2 데이터에 따라 UI가 어떻게 보일지 작성
       모달창열렸니: false, // 1 UI의 현재 상태를 데이터로 저장해둠
       신고수 : [0,0,0],
       메뉴들 : ['Home', 'Shop', 'About'],
