@@ -8,6 +8,7 @@
     <div class="white-bg">
       <h4>상세페이지임</h4>
       <p>상세페이지 내용임</p>
+      <botton @click="모달창열렸니 = false">닫기</botton>
     </div>
   </div>
 
@@ -19,19 +20,17 @@
   </div>
   -->
 
-  <div>
-    <img src="./assets/room0.jpg" class="room-img"> <!-- 이미지는 src/assets 디렉토리에 저장하자 -->
-    <h4 @click="모달창열렸니 = true">{{products[0]}}</h4>
-    <p>50 만원</p>
-    <button @click="신고수[0]++">허위매물신고</button>
-    <span>신고수: {{신고수[0]}}</span> <!-- @click == v-on:click -->
+  <div> <!-- HTML 태그안의 속성 데이터바인딩은 :어쩌구, HTML 태그안의 내용 데이터바인딩은 {{ 어쩌구 }} -->
+    <img :src="원룸들[0].image" class="room-img"> <!-- 이미지는 src/assets 디렉토리에 저장하자 -->
+    <h4>{{ 원룸들[0].title }}</h4>
+    <p>{{ 원룸들[0].price }}원</p>
   </div>
   <div>
     <img src="./assets/room1.jpg" class="room-img">
     <h4>{{products[1]}}</h4>
     <p>60 만원</p>
     <button @click="신고수[1]++">허위매물신고</button>
-    <span>신고수: {{신고수[1]}}</span>
+    <span>신고수: {{신고수[1]}}</span> <!-- @click == v-on:click -->
   </div>
   <div>
     <img src="./assets/room2.jpg" class="room-img">
@@ -43,12 +42,14 @@
 </template>
 
 <script>
+import data from './assets/oneroom.js' // import/export 문법 쓰는 법 1) export default 변수명 or {변수명1, 변수명2, ...} 2) import 변수명 or {변수명1, 변수명2, ...} from 그 파일경로 ,참고로 변수 선언하고 사용 안하면 에러
 
 export default {
   name: 'App',
   data(){ // 데이터 보관하는 곳. 일반 변수 뿐만 아니라 HTML 속성도 데이터 바인딩 가능
     return {
       // 동적 UI 만드는 법. 1 UI의 현재 상태를 데이터로 저장해둠 2 데이터에 따라 UI가 어떻게 보일지 작성
+      원룸들: data,
       모달창열렸니: false, // 1 UI의 현재 상태를 데이터로 저장해둠
       신고수 : [0,0,0],
       메뉴들 : ['Home', 'Shop', 'About'],
