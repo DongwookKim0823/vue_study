@@ -11,17 +11,13 @@
     안녕하세요1
   </div> -->
 
-  <div class="black-bg" v-if="모달창열렸니 == true">
-    <div class="white-bg">
-      <h4>{{ 원룸들[누른거].title }}</h4>
-      <p>{{ 원룸들[누른거].content }}</p>
-      <botton @click="모달창열렸니 = false">닫기</botton>
-    </div>
-  </div>
+  <Modal/>
 
   <div class="menu">
     <a v-for="a in 메뉴들" :key="a">{{ a }}</a> <!-- 반복문 형식: <태그 v-for="작명 in 횟수/데이터(array, object) :key="작명"> -->
   </div>
+
+  <Discount/>
 
   <!--
   아래와 같은 방법을 반복문으로 해결
@@ -54,6 +50,8 @@
 
 <script>
 import data from './assets/oneroom.js' // import/export 문법 쓰는 법 1) export default 변수명 or {변수명1, 변수명2, ...} 2) import 변수명 or {변수명1, 변수명2, ...} from 그 파일경로 ,참고로 변수 선언하고 사용 안하면 에러
+import Discount from './Discount.vue'; // 생성한 컴포넌트 사용하기 1) import 하기 2) components {}에 등록 3) <Discount/> 처럼 가져다가 사용하기
+import Modal from './Modal.vue';
 
 export default {
   name: 'App',
@@ -74,6 +72,8 @@ export default {
     }
   },
   components: {
+    Discount : Discount, // 왼쪽이 위에서 import한 것, 또한 생략도 가능
+    Modal : Modal,
   }
 }
 </script>
@@ -85,6 +85,13 @@ body {
 div {
   box-sizing: border-box;
 }
+.discount {
+  background: #eee;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+}
+
 .black-bg {
   width: 100%; height: 100%;
   background: rgba(0,0,0,0.5);
