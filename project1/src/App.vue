@@ -11,7 +11,7 @@
     안녕하세요1
   </div> -->
 
-  <Modal v-bind:원룸들="원룸들" :누른거="누른거" v-bind:모달창열렸니="모달창열렸니" /> <!--자식 컴포넌트가 부모가 갖고 있는 데이터를 쓰려면 props로 데이터를 전송해야함. 밑에 있는 데이터 보내고(v-bind 생략 가능)>등록하고>가져다 쓰셈-->
+  <Modal v-bind:원룸들="원룸들" :누른거="누른거" v-bind:모달창열렸니="모달창열렸니" /> <!--자식 컴포넌트가 부모가 갖고 있는 데이터를 쓰려면 props로 데이터를 전송해야함. 밑에 있는 데이터 보내고(v-bind 생략 가능)>등록하고>가져다 쓰셈. props로 다양한 자료형 입력 가능. 문자를 전송할 때 ':' 생략 가능 -->
 
   <div class="menu">
     <a v-for="a in 메뉴들" :key="a">{{ a }}</a> <!-- 반복문 형식: <태그 v-for="작명 in 횟수/데이터(array, object) :key="작명"> -->
@@ -27,11 +27,18 @@
   </div>
   -->
 
-  <div v-for="(작명,i) in 원룸들" :key="i"> <!-- HTML 태그안의 속성 데이터바인딩은 :어쩌구, HTML 태그안의 내용 데이터바인딩은 {{ 어쩌구 }} -->
-    <img :src="원룸들[i].image" class="room-img"> <!-- 이미지는 src/assets 디렉토리에 저장하자 -->
-    <h4 @click="모달창열렸니 = true; 누른거 = i">{{ 원룸들[i].title }}</h4> <!-- @click == v-on:click -->
+  <Card :원룸="원룸들[i]" v-for="(작명,i) in 원룸들" :key="i" />
+  <!-- <Card :원룸="원룸들[1]" />
+  <Card :원룸="원룸들[2]" />
+  <Card :원룸="원룸들[3]" />
+  <Card :원룸="원룸들[4]" />
+  <Card :원룸="원룸들[5]" /> -->
+
+  <!-- <div v-for="(작명,i) in 원룸들" :key="i"> HTML 태그안의 속성 데이터바인딩은 :어쩌구, HTML 태그안의 내용 데이터바인딩은 {{ 어쩌구 }}
+    <img :src="원룸들[i].image" class="room-img"> 이미지는 src/assets 디렉토리에 저장하자
+    <h4 @click="모달창열렸니 = true; 누른거 = i">{{ 원룸들[i].title }}</h4> @click == v-on:click
     <p>{{ 원룸들[i].price }}원</p>
-  </div>
+  </div> -->
   <!-- <div>
     <img src="./assets/room1.jpg" class="room-img">
     <h4>{{products[1]}}</h4>
@@ -52,6 +59,7 @@
 import data from './assets/oneroom.js' // import/export 문법 쓰는 법 1) export default 변수명 or {변수명1, 변수명2, ...} 2) import 변수명 or {변수명1, 변수명2, ...} from 그 파일경로 ,참고로 변수 선언하고 사용 안하면 에러
 import Discount from './Discount.vue'; // 생성한 컴포넌트 사용하기 1) import 하기 2) components {}에 등록 3) <Discount/> 처럼 가져다가 사용하기
 import Modal from './Modal.vue';
+import Card from './Card.vue';
 
 export default {
   name: 'App',
@@ -74,6 +82,7 @@ export default {
   components: {
     Discount : Discount, // 왼쪽이 위에서 import한 것, 또한 생략도 가능
     Modal : Modal,
+    Card : Card,
   }
 }
 </script>
