@@ -11,8 +11,13 @@
     안녕하세요1
   </div> -->
 
-  <Modal @closeMoal="모달창열렸니 = false" v-bind:원룸들="원룸들" :누른거="누른거" v-bind:모달창열렸니="모달창열렸니" /> <!--자식 컴포넌트가 부모가 갖고 있는 데이터를 쓰려면 props로 데이터를 전송해야함. 밑에 있는 데이터 보내고(v-bind 생략 가능)>등록하고>가져다 쓰셈. props로 다양한 자료형 입력 가능. 문자를 전송할 때 ':' 생략 가능 -->
-  <!-- @closeMoal는 부모 데이터한테 신호를 받고 값을 변경 -->
+  <!-- <div class="start" :class="{ end : 모달창열렸니 }"> :class="{ end : 모달창열렸니 }"는 조건부로 클래스를 데이터바인딩하는 유용한 방법
+    <Modal @closeMoal="모달창열렸니 = false" v-bind:원룸들="원룸들" :누른거="누른거" v-bind:모달창열렸니="모달창열렸니" /> 
+  </div> -->
+  <transition name="fade"> <!-- 위 방법은 js로 애니메이션 주는 방법, 지금 방법은 vue로 애니메이션 주는 방법. 이후는 style 참고-->
+    <Modal @closeMoal="모달창열렸니 = false" v-bind:원룸들="원룸들" :누른거="누른거" v-bind:모달창열렸니="모달창열렸니" /> <!--자식 컴포넌트가 부모가 갖고 있는 데이터를 쓰려면 props로 데이터를 전송해야함. 밑에 있는 데이터 보내고(v-bind 생략 가능)>등록하고>가져다 쓰셈. props로 다양한 자료형 입력 가능. 문자를 전송할 때 ':' 생략 가능 -->
+    <!-- @closeMoal는 부모 데이터한테 신호를 받고 값을 변경 -->
+  </transition>
 
   <div class="menu">
     <a v-for="a in 메뉴들" :key="a">{{ a }}</a> <!-- 반복문 형식: <태그 v-for="작명 in 횟수/데이터(array, object) :key="작명"> -->
@@ -89,6 +94,35 @@ export default {
 </script>
 
 <style>
+/* transition으로 애니메이션 주려면 아래 세개 다 만들어야 함. enter-from는 도입 애니메니션임. 퇴증 애니메이션은 -leave- */
+.fade-enter-from { /* 시작 시 스타일 */
+  opacity: 0;
+}
+.fade-enter-active { /* 애니메이션 */
+  transition: all 1s;
+}
+.fade-enter-to { /* 끝날 시 스타일 */
+  opacity: 1;
+}
+.fade-leave-from { /* 시작 시 스타일 */
+  opacity: 1;
+}
+.fade-leave-active { /* 애니메이션 */
+  transition: all 1s;
+}
+.fade-leave-to { /* 끝날 시 스타일 */
+  opacity: 0;
+}
+
+.start {
+  opacity: 0;
+  transition: all 1s;
+}
+.end {
+  opacity: 1;
+}
+
+
 body {
   margin: 0
 }
