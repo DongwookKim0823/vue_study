@@ -20,6 +20,14 @@ export default {
         month : 1, // 문자 입력 받을거면 초기값을 문자로 하셈
       }
     },
+    watch : { // 데이터를 감시하기 위해서는 watcher를 사용
+      month(a) { // 감시할 데이터명() -> method 생성, a는 변경 후 month 데이터임, a의 뒤에 오는 인자는 변경 전 month 데이터 
+        // 사용자가 month를 글자로 입력하면 경고문
+        if (a >= 13) {
+          alert('13이상 입력하지 마셈')
+        }
+      },
+    },
     props : { // props는 read-only여서, 받아온 거 수정하면 큰일남
       원룸들 : Array,
       누른거 : Number,
