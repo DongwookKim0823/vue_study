@@ -23,7 +23,7 @@
     <a v-for="a in 메뉴들" :key="a">{{ a }}</a> <!-- 반복문 형식: <태그 v-for="작명 in 횟수/데이터(array, object) :key="작명"> -->
   </div>
 
-  <Discount/>
+  <Discount v-if="showDiscount == true"/> <!--UI만드는법 1) UI현재 상태 만들어두고 2) 그거에 따라 보이는지 안보이는지-->
 
   <button @click="priceSort">가격순정렬</button> <!--생js로 정렬 기능 1)원룸들 데이터 정렬하고 2)HTML에 반영. Vue라면 원룸들 데이터를 정렬하면 끝-->
   <button @click="sortBack">되돌리기</button>
@@ -74,6 +74,7 @@ export default {
   name: 'App',
   data(){ // 데이터 보관하는 곳. 일반 변수 뿐만 아니라 HTML 속성도 데이터 바인딩 가능
     return {
+      showDiscount : true,
       원룸들오리지널: [...data],
       누른거: 0,
       원룸들: data,
@@ -97,6 +98,11 @@ export default {
         return a.price - b.price
       })
     }
+  },
+  mounted() { // 라이프사이클 부분 숙지하고 훅 부분 알아둬야 쓰기 가능할듯
+    setTimeout(()=>{ //function이 아니라 arrow function 사용해야함. 장점은 밖깥의 this를 잘 가져다 쓸 수 있음. 함수 내부에서 this를 쓸일 있으면 arrow function 사용하기
+      this.showDiscount = false;
+    }, 2000);
   },
   components: {
     Discount : Discount, // 왼쪽이 위에서 import한 것, 또한 생략도 가능
