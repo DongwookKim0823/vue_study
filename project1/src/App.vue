@@ -25,6 +25,9 @@
 
   <Discount/>
 
+  <button @click="priceSort">가격순정렬</button> <!--생js로 정렬 기능 1)원룸들 데이터 정렬하고 2)HTML에 반영. Vue라면 원룸들 데이터를 정렬하면 끝-->
+  <button @click="sortBack">되돌리기</button>
+
   <!--
   아래와 같은 방법을 반복문으로 해결
   <div v-for="(a,i) in products" :key="i"> a에는 아이템, i에는 인덱스
@@ -71,6 +74,7 @@ export default {
   name: 'App',
   data(){ // 데이터 보관하는 곳. 일반 변수 뿐만 아니라 HTML 속성도 데이터 바인딩 가능
     return {
+      원룸들오리지널: [...data],
       누른거: 0,
       원룸들: data,
       // 동적 UI 만드는 법. 1 UI의 현재 상태를 데이터로 저장해둠 2 데이터에 따라 UI가 어떻게 보일지 작성
@@ -83,6 +87,15 @@ export default {
   methods: { // 자바스크립트 함수는 여기 위치에 작성해야 함.
     increase() {
       this.신고수 += 1; // 내부의 변수를 사용할 때는 this 키워드 잊지 말자
+    },
+    sortBack(){
+      //this.원룸들 = this.원룸들오리지널; // 주의) 등호로 array를 집어넣으면 왼쪽 오른쪽 값 공유해주세요임
+      this.원룸들 = [...this.원룸들오리지널]; // array/object 데이터의 각각 별개의 사본을 만들려면 [...array자료]
+    },
+    priceSort() {
+      this.원룸들.sort(function(a,b){
+        return a.price - b.price
+      })
     }
   },
   components: {
