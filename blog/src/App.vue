@@ -35,13 +35,29 @@
     </div>
   </div>
 </nav>
+
+<div class="container mt-4">
+  <h5>React 개발자의 블로그 입니다</h5>
+  <p>- Vue로 만들었음 -</p>
+</div>
+
+<List :블로그글="블로그글" /> <!--컴포넌트는 import, 등록, 사용하기 순으로 사용, props 전송은 보내고, 등록사고 사용-->
+
 </template>
 
 <script>
+import List from './components/List.vue';
+import blog from './assets/blog.js'; // data() 안의 return에 다 넣기 그래서 따로 외부의 파일에 넣고 import 하는 방식. 외부의 파일에 넣고 export 해야함.
 
 export default {
   name: 'App',
+  data(){
+    return {
+      블로그글 : blog
+    }
+  },
   components: {
+    List : List,
   }
 }
 </script>
